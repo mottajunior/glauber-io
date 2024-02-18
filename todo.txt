@@ -1,0 +1,5 @@
+[] Go mid init with correct github address
+[] Initialize Config (database and logger)
+[] Initialize Handlers with injected config 
+[] Initialize Routes
+[] Implement Handler Crate User Account like a professional

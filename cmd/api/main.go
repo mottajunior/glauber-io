@@ -1,9 +1,8 @@
 package main
 
 import (
-	"glauber-io/internal/routes"
-
 	"github.com/gin-gonic/gin"
+	"github.com/mottajunior/glauber-io/internal/routes"
 )
 
 func main() {
