@@ -1,12 +1,25 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/mottajunior/glauber-io/internal/routes"
+	"log/slog"
+
+	"github.com/mottajunior/glauber-io/internal/config"
+	"github.com/mottajunior/glauber-io/internal/handler"
+	"github.com/mottajunior/glauber-io/internal/router"
 )
 
 func main() {
-	server := gin.Default()
-	routes.ConfigureRoutes(server)
-	server.Run()
+
+	//Initialize  Configs [Database]
+	err := config.Init()
+	if err != nil {
+		slog.Error("error when initialize configurations:", err)
+		return
+	}
+
+	//Initialize  Handlers Dependencies
+	handler.Init()
+
+	//Initialize Server And Routes
+	router.Init()
 }
