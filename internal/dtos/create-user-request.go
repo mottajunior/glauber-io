@@ -1,15 +1,15 @@
-package handler
+package dto
 
 import "fmt"
 
-type CreateAccountRequest struct {
+type CreateUserRequest struct {
 	Name     string `json:"name"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
 	Age      int    `json:"age"`
 }
 
-func (r *CreateAccountRequest) Validate() error {
+func (r *CreateUserRequest) Validate() error {
 	if r.Age < 18 {
 		return fmt.Errorf("age is lower than 18")
 	}

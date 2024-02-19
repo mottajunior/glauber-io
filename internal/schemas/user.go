@@ -2,7 +2,7 @@ package schemas
 
 import "gorm.io/gorm"
 
-type Account struct {
+type User struct {
 	gorm.Model
 	Name  string
 	Email string
