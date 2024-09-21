@@ -1,27 +1,27 @@
-package usecase
+package handler
 
 import (
 	"log/slog"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	dto "github.com/mottajunior/glauber-io/internal/dtos"
+	dto "github.com/mottajunior/glauber-io/internal/dto"
 	"github.com/mottajunior/glauber-io/internal/repository"
 	"github.com/mottajunior/glauber-io/internal/schemas"
 )
 
-type CreateUserUseCase struct {
+type UserHandler struct {
 	userRepository repository.UserRepository
 }
 
-func NewCreateUserUseCase(repo repository.UserRepository) *CreateUserUseCase {
-	usecase := CreateUserUseCase{userRepository: repo}
-	return &usecase
+func NewUserHandler(repo repository.UserRepository) *UserHandler {
+	uc := UserHandler{userRepository: repo}
+	return &uc
 }
 
-func (usecase CreateUserUseCase) Execute(ctx *gin.Context) {
+func (usrHandler UserHandler) Create(ctx *gin.Context) {
 	request := dto.CreateUserRequest{}
-	ctx.BindJSON(&request)
+	_ = ctx.BindJSON(&request)
 
 	if err := request.Validate(); err != nil {
 		slog.Error("Error when validate request: ", err)
@@ -35,7 +35,7 @@ func (usecase CreateUserUseCase) Execute(ctx *gin.Context) {
 		Age:   request.Age,
 	}
 
-	if err := usecase.userRepository.Save(user); err != nil {
+	if err := usrHandler.userRepository.Save(user); err != nil {
 		slog.Error("Error when save user on database: ", err)
 		SendError(ctx, http.StatusInternalServerError, "error creating user on database")
 		return
